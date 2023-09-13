@@ -2,12 +2,12 @@ import { pool } from "../models/database.js";
 import bcrypt from "bcrypt";
 
 export const register = async (req, res, next) => {
-  const { username, password } = req.body;
+  const { username, email, password } = req.body;
   const hash = await bcrypt.hash(password, 10);
   const [user] = await pool.query(
-    `INSERT INTO users(username, password)
-       VALUES(?, ?)`,
-    [username, hash]
+    `INSERT INTO users(username, email, password)
+       VALUES(?, ?, ?)`,
+    [username, email, hash]
   );
   res.send("success");
 };

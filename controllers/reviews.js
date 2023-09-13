@@ -4,7 +4,7 @@ import { AppError } from "../utilities/AppError.js";
 export const showAll = async (req, res, next) => {
   const { id } = req.params;
   const [allReviews] = await pool.query(
-    `SELECT * FROM reviews where daytrip_id = ?`,
+    `SELECT * FROM reviews WHERE daytrip_id = ?`,
     [id]
   );
   res.send(allReviews);
@@ -15,7 +15,7 @@ export const createReview = async (req, res, next) => {
   const [newReview] = await pool.query(
     `INSERT INTO reviews (body, rating, daytrip_id, user_id)
         VALUES(?, ?, ?, ?)`,
-    [req.body.body, req.body.rating, id, req.user]
+    [req.body.body, req.body.rating, id, req.user.id]
   );
   res.send("new review posted");
 };
@@ -26,7 +26,7 @@ export const updateReview = async (req, res, next) => {
     `UPDATE reviews 
         SET body = ?, rating = ?, daytrip_id = ?, user_id = ?
         WHERE id = ?`,
-    [req.body.body, req.body.rating, id, req.user, reviewId]
+    [req.body.body, req.body.rating, id, req.user.id, reviewId]
   );
   if (changeReview.affectedRows === 0) {
     throw new AppError("review not found", 404);

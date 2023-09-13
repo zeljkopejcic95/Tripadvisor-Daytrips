@@ -4,9 +4,9 @@ import bcrypt from "bcrypt";
 import passport from "passport";
 
 export function initialize() {
-  const authenticateUser = async (username, password, done) => {
-    const [user] = await pool.query(`SELECT * FROM users WHERE username = ?`, [
-      username,
+  const authenticateUser = async (email, password, done) => {
+    const [user] = await pool.query(`SELECT * FROM users WHERE email = ?`, [
+      email,
     ]);
     if (!user[0]) {
       return done(null, false);
@@ -23,13 +23,18 @@ export function initialize() {
     }
   };
 
-  passport.use(new LocalStrategy(authenticateUser));
+  passport.use(
+    new LocalStrategy(
+      { usernameField: "email", passwordField: "password" },
+      authenticateUser
+    )
+  );
 
   passport.serializeUser((user, done) => {
-    done(null, user.id);
+    done(null, { id: user.id, email: user.email });
   });
-  passport.deserializeUser((id, done) => {
-    pool.query("SELECT * FROM users WHERE id = ?", [id]);
-    return done(null, id);
+  passport.deserializeUser((user, done) => {
+    pool.query("SELECT * FROM users WHERE id = ?", [user.id]);
+    return done(null, user);
   });
 }

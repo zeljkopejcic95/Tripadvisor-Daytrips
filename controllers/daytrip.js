@@ -21,7 +21,7 @@ export const createDaytrip = async (req, res, next) => {
   const [newDayTrip] = await pool.query(
     `INSERT INTO daytrip(name, price, description, author)
          VALUES(?, ?, ?, ?)`,
-    [req.body.name, req.body.price, req.body.description, req.user]
+    [req.body.name, req.body.price, req.body.description, req.user.id]
   );
   res.send("new daytrip posted");
 };
@@ -32,7 +32,7 @@ export const updateDaytrip = async (req, res, next) => {
     `UPDATE daytrip
        SET name = ?, price = ?, description = ?, author = ?
        WHERE id = ?`,
-    [req.body.name, req.body.price, req.body.description, req.user, id]
+    [req.body.name, req.body.price, req.body.description, req.user.id, id]
   );
   if (updateDayTrip.changedRows === 0) {
     throw new AppError("Daytrip not found", 404);
