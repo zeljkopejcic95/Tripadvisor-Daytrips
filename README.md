@@ -2,7 +2,7 @@
 
 ---
 
-This app handles User authentication and CRUD operations for Day Trip and Day Trip Reviews.
+This app handles User authentication and CRUD operations for Day Trip, Day Trip Reviews and Booking Day Trip.
 
 ### Available endpoints related to user authentication:
 
@@ -24,3 +24,8 @@ This app handles User authentication and CRUD operations for Day Trip and Day Tr
 - `POST http://localhost:3000/dayTrip/<id>/reviews` - Creates new Day Trip Review. Expected payload: `body`, `rating`
 - `PUT http://localhost:3000/dayTrip/<id>/reviews/<reviewId>` - Updates Day Trip Review
 - `DELETE http://localhost:3000/dayTrip/<id>/reviews/<reviewId>` - Deletes Day trip Review
+
+### Available endpoint for Booking Day Trip:
+
+- `GET http://localhost:3000/dayTrip/<daytripId>/booking/<travelerId>` - Lists all Booked Day trips for current user
+- `POST http://localhost:3000/dayTrip/<id>/booking/` - Creates new Booking for Day trip. Expected payload: `travel date`
