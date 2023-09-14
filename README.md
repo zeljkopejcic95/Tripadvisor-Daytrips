@@ -28,4 +28,4 @@ This app handles User authentication and CRUD operations for Day Trip, Day Trip 
 ### Available endpoint for Booking Day Trip:
 
 - `GET http://localhost:3000/dayTrip/<daytripId>/booking/<travelerId>` - Lists all Booked Day trips for current user
-- `POST http://localhost:3000/dayTrip/<id>/booking/` - Creates new Booking for Day trip. Expected payload: `travel date`
+- `POST http://localhost:3000/dayTrip/<daytripId>/booking/` - Creates new Booking for Day trip. Expected payload: `travel date`
