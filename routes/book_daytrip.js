@@ -6,11 +6,13 @@ import * as book_daytrip from "../controllers/book_daytrip.js";
 const router = express.Router({ mergeParams: true });
 
 router.get(
-  "/:travelerId",
+  "/booking/:travelerId",
   isLoggedIn,
   catchAsync(book_daytrip.showUserBookings)
 );
 
-router.post("/", isLoggedIn, catchAsync(book_daytrip.createBooking));
+router.post("/booking", isLoggedIn, catchAsync(book_daytrip.createBooking));
+
+router.post("/payment", isLoggedIn, catchAsync(book_daytrip.payment));
 
 export default router;
